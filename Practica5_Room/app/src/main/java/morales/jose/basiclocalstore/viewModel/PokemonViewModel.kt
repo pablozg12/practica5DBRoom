@@ -36,11 +36,6 @@ class PokemonViewModel (private val repository: PokemonRepository): ViewModel(){
     private set
     var pokemonSeEscapo by mutableStateOf(false)
         private set
-    private val allPokemons = repository.allPokemons.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
     val filteredPokemons: StateFlow<List<PokemonEntity>> = snapshotFlow { searchQuery }
         .flatMapLatest { query ->
             if (query.isEmpty()) {
